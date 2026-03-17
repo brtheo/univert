@@ -1,0 +1,7 @@
+{
+  "name": "uni-vert",
+  "description": "Optimisation du meal-prep pour les étudiants : planification, entraide et ateliers cuisine.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
