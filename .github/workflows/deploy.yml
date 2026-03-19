@@ -1,0 +1,27 @@
+
+jobs:
+  deploy:
+    name: Déploiement
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Nécessaire pour l'authentification avec Deno Deploy
+      contents: read # Nécessaire pour cloner le dépôt
+
+    steps:
+      - name: Clonage du dépôt
+        uses: actions/checkout@v4
+
+      # Vous n'utilisez pas npm ? Remplacez `npm ci` par `yarn install` ou `pnpm i`
+      - name: Installation des dépendances
+        run: npm ci
+
+      # Vous n'utilisez pas npm ? Remplacez `npm run build` par `yarn build` ou `pnpm run build`.
+      - name: Construction du site Astro
+        run: npm run build
+
+      - name: Téléchargement vers Deno Deploy
+        uses: denoland/deployctl@v1
+        with:
+          project: univert # TODO : remplacer par le nom du projet Deno Deploy
+          entrypoint: jsr:@std/http/file-server
+          root: dist/index.html
